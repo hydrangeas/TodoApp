@@ -25,6 +25,7 @@ namespace TodoApp.Controllers
         {
             if (id == null)
             {
+                // BadRequest(400)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Todo todo = db.Todoes.Find(id);
