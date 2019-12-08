@@ -44,7 +44,7 @@ namespace TodoApp.Models
                     .FirstOrDefault();
                 if(user != null)
                 {
-                    user.Roles.Select(role => role.RoleName).ToArray();
+                    return user.Roles.Select(role => role.RoleName).ToArray();
                 }
             }
             return new string[] { };
