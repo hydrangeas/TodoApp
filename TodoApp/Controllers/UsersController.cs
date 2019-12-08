@@ -39,6 +39,7 @@ namespace TodoApp.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
+            SetRoles(new List<Role>());
             return View();
         }
 
@@ -71,6 +72,8 @@ namespace TodoApp.Controllers
             {
                 return HttpNotFound();
             }
+
+            SetRoles(user.Roles);
             return View(user);
         }
 
@@ -123,6 +126,20 @@ namespace TodoApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private void SetRoles(ICollection<Role> userRoles)
+        {
+            var roles = userRoles.Select(item => item.Id).ToArray();
+
+            var list = db.Roles.Select(item => new SelectListItem()
+            {
+                Text = item.RoleName,
+                Value = item.Id.ToString(),
+                Selected = roles.Contains(item.Id)
+            }).ToList();
+
+            ViewBag.RoleIds = list;
         }
     }
 }

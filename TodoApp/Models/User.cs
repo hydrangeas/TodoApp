@@ -26,5 +26,9 @@ namespace TodoApp.Models
         // UserとRoleを関連付けるプロパティ＝ナビゲーションプロパティ
         // ナビゲーションプロパティ＝virtualを付ける必要がある
         public virtual ICollection<Role> Roles { get; set; }
+
+        [NotMapped]
+        [DisplayName("ロール")]
+        public List<int> RoleIds { get; set; }
     }
 }
