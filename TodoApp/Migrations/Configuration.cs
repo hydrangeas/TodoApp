@@ -33,13 +33,6 @@ namespace TodoApp.Migrations
                 Password = "password",
                 Roles = new List<Role>()
             };
-            User user = new User()
-            {
-                Id = 2,
-                UserName = "user",
-                Password = "password",
-                Roles = new List<Role>()
-            };
             Role administrators = new Role()
             {
                 Id = 1,
@@ -53,12 +46,13 @@ namespace TodoApp.Migrations
                 Users = new List<User>()
             };
 
+            var membershipProvider = new CustomMembershipProvider();
+            admin.Password = membershipProvider.GeneratePasswordHash(admin.UserName, admin.Password);
+
             admin.Roles.Add(administrators);
             administrators.Users.Add(admin);
-            user.Roles.Add(users);
-            users.Users.Add(user);
 
-            context.Users.AddOrUpdate(u => u.Id, new User[] { admin, user });
+            context.Users.AddOrUpdate(u => u.Id, new User[] { admin });
             context.Roles.AddOrUpdate(r => r.Id, new Role[] { administrators, users });
         }
     }
