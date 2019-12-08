@@ -18,7 +18,12 @@ namespace TodoApp.Controllers
         // GET: Todoes
         public ActionResult Index()
         {
-            return View(db.Todoes.ToList());
+            var user = db.Users.Where(item => item.UserName == User.Identity.Name).FirstOrDefault();
+            if (user != null)
+            {
+                return View(user.Todoes);
+            }
+            return View(new List<Todo>());
         }
 
         // GET: Todoes/Details/5
@@ -52,9 +57,15 @@ namespace TodoApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Todoes.Add(todo);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var user = db.Users.Where(item => item.UserName == User.Identity.Name).FirstOrDefault();
+                if (user != null)
+                {
+                    todo.User = user;
+
+                    db.Todoes.Add(todo);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(todo);

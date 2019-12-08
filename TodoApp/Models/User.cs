@@ -30,5 +30,7 @@ namespace TodoApp.Models
         [NotMapped]
         [DisplayName("ロール")]
         public List<int> RoleIds { get; set; }
+
+        public virtual ICollection<Todo> Todoes { get; set; }
     }
 }

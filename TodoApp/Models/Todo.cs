@@ -14,5 +14,7 @@ namespace TodoApp.Models
         public DateTime Limit { get; set; }
         [DisplayName("完了")]
         public bool Done { get; set; }
+
+        public virtual User User { get; set; }
     }
 }
